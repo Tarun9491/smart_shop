@@ -175,8 +175,8 @@ if ($hasLegacyAdmin && $hasLegacyAdmin->num_rows > 0) {
 // Ensure default superadmin exists
 $checkSuper = $conn->query("SELECT id FROM `admins` WHERE `username` = 'superadmin'");
 if ($checkSuper->num_rows == 0) {
-    $hp = password_hash('Admin@123', PASSWORD_DEFAULT);
-    $email = 'superadmin@smartshop.com';
+    $hp = password_hash('Lakkoju@9491', PASSWORD_DEFAULT);
+    $email = 'tarunlakkoju966@gmail.com';
     $role = 'superadmin';
     $u = 'superadmin';
     $stmt = $conn->prepare("INSERT INTO `admins` (username, email, password, role, is_active) VALUES (?, ?, ?, ?, 1)");
