@@ -119,37 +119,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
            PAGE BACKGROUND
            ========================================= */
 
-        body {
-            margin: 0;
+       body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
 
-            font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    width: 100%;
 
-            min-height: 100vh;
+    background-image:
+        linear-gradient(
+            rgba(55, 38, 25, 0.15),
+            rgba(55, 38, 25, 0.15)
+        ),
+        url('ChatGPT%20Image%20Sep%2018%2C%202026%2C%2003_50_08%20PM.png');
 
-            /* Furniture background image */
-            background-image:
-                linear-gradient(
-                    rgba(55, 38, 25, 0.15),
-                    rgba(55, 38, 25, 0.15)
-                ),
-                url('ChatGPT%20Image%20Sep%2018%2C%202026%2C%2003_50_08%20PM.png');
+    /* IMPORTANT: show the complete image */
+    background-size: 100% 100%;
 
-            background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 
-            background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-            background-repeat: no-repeat;
+    padding: 20px;
 
-            background-attachment: fixed;
-
-            display: flex;
-
-            justify-content: center;
-
-            align-items: center;
-
-            padding: 20px;
-        }
+    /* Prevent horizontal/vertical overflow */
+    overflow: hidden;
+}
 
 
         /* =========================================
