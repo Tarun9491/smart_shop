@@ -443,97 +443,182 @@ if ($isLoggedIn) {
 
 
         /* =========================================================
-           MOBILE — FIT THE FULL WEBSITE TO THE SCREEN
+           MOBILE — FINAL RESPONSIVE LAYOUT
+           Keeps every section inside the phone viewport.
+           Desktop layout is unchanged.
            ========================================================= */
         @media (max-width: 768px) {
             html,
             body {
-                width: 100%;
-                max-width: 100%;
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
                 overflow-x: hidden !important;
             }
 
             body {
-                min-height: 100vh;
+                margin: 0 !important;
             }
 
+            /* ---------- HEADER ---------- */
             header {
-                width: 100%;
-                padding: 14px 16px !important;
-                gap: 10px;
-                flex-wrap: wrap;
+                position: relative !important;
+                top: auto !important;
+                left: auto !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
+                height: auto !important;
+                min-height: 0 !important;
+                margin: 0 !important;
+                padding: 18px 12px 22px !important;
+                display: block !important;
+                overflow: hidden !important;
+                box-sizing: border-box !important;
             }
 
             header h2 {
-                font-size: 21px !important;
-                line-height: 1.2;
-                margin: 0;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 0 18px !important;
+                padding: 0 !important;
+                text-align: center !important;
+                font-size: 25px !important;
+                line-height: 1.25 !important;
+                white-space: nowrap !important;
             }
 
             header nav {
-                width: 100%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-wrap: wrap;
-                gap: 7px !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                display: flex !important;
+                flex-wrap: wrap !important;
+                justify-content: center !important;
+                align-items: center !important;
+                gap: 10px 14px !important;
+                overflow: visible !important;
+                box-sizing: border-box !important;
             }
 
             header nav a {
-                font-size: 12px !important;
-                white-space: nowrap;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                width: auto !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
+                margin: 0 !important;
+                padding: 7px 4px !important;
+                font-size: 15px !important;
+                line-height: 1.2 !important;
+                white-space: nowrap !important;
+                box-sizing: border-box !important;
             }
 
-            .nav-btn {
-                padding: 8px 12px !important;
+            header nav .nav-btn {
+                padding: 10px 18px !important;
+                border-radius: 28px !important;
             }
 
+            /* Put the account button on its own centered row.
+               This prevents the header from squeezing other links. */
+            header nav .nav-btn-register {
+                flex-basis: auto !important;
+                margin-top: 2px !important;
+            }
+
+            header nav .badge {
+                flex: 0 0 auto !important;
+                max-width: none !important;
+                margin-left: 4px !important;
+                padding: 4px 8px !important;
+                white-space: nowrap !important;
+            }
+
+            /* ---------- HERO ---------- */
             .hero {
-                width: 100%;
-                min-height: 330px !important;
-                padding: 55px 18px !important;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                text-align: center;
+                position: relative !important;
+                z-index: 1 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
+                min-height: 390px !important;
+                margin: 0 !important;
+                padding: 52px 18px 55px !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+                align-items: center !important;
+                text-align: center !important;
+                overflow: hidden !important;
+                box-sizing: border-box !important;
             }
 
             .hero h1 {
-                font-size: clamp(28px, 8vw, 42px) !important;
+                position: relative !important;
+                z-index: 2 !important;
+                width: 100% !important;
+                max-width: 650px !important;
+                margin: 0 0 18px !important;
+                padding: 0 !important;
+                font-size: clamp(29px, 8vw, 42px) !important;
                 line-height: 1.15 !important;
-                margin: 0 0 14px !important;
+                text-align: center !important;
+                overflow-wrap: normal !important;
+                word-break: normal !important;
             }
 
             .hero p {
-                font-size: 14px !important;
-                line-height: 1.6 !important;
-                max-width: 92%;
-                margin: 0 auto 22px !important;
+                position: relative !important;
+                z-index: 2 !important;
+                width: 100% !important;
+                max-width: 620px !important;
+                margin: 0 auto 25px !important;
+                padding: 0 !important;
+                font-size: 15px !important;
+                line-height: 1.65 !important;
+                text-align: center !important;
             }
 
             .hero button {
-                max-width: 90%;
-                padding: 12px 22px !important;
-                font-size: 14px !important;
+                position: relative !important;
+                z-index: 2 !important;
+                width: auto !important;
+                max-width: calc(100% - 20px) !important;
+                margin: 0 auto !important;
+                padding: 13px 24px !important;
+                font-size: 15px !important;
+                line-height: 1.3 !important;
+                box-sizing: border-box !important;
             }
 
+            /* ---------- COLLECTION TITLE ---------- */
             .title {
-                font-size: 25px !important;
-                line-height: 1.25 !important;
-                padding: 30px 15px 20px !important;
+                width: 100% !important;
+                max-width: 100% !important;
                 margin: 0 !important;
-                text-align: center;
+                padding: 34px 14px 22px !important;
+                font-size: 27px !important;
+                line-height: 1.25 !important;
+                text-align: center !important;
+                box-sizing: border-box !important;
             }
 
+            /* ---------- PRODUCTS ---------- */
             .products {
                 width: 100% !important;
                 max-width: 100% !important;
-                padding: 10px 14px 30px !important;
+                min-width: 0 !important;
                 margin: 0 !important;
+                padding: 8px 14px 35px !important;
                 display: grid !important;
                 grid-template-columns: minmax(0, 1fr) !important;
-                gap: 20px !important;
+                gap: 22px !important;
+                overflow: hidden !important;
+                box-sizing: border-box !important;
             }
 
             .card {
@@ -541,134 +626,261 @@ if ($isLoggedIn) {
                 max-width: 100% !important;
                 min-width: 0 !important;
                 margin: 0 !important;
+                padding: 0 0 24px !important;
                 overflow: hidden !important;
+                box-sizing: border-box !important;
             }
 
             .product-image {
+                display: block !important;
                 width: 100% !important;
                 max-width: 100% !important;
                 height: auto !important;
-                aspect-ratio: 4 / 3;
+                aspect-ratio: 4 / 3 !important;
                 object-fit: cover !important;
-                display: block;
+                margin: 0 !important;
+                box-sizing: border-box !important;
             }
 
             .card h3 {
-                font-size: 21px !important;
-                line-height: 1.25;
-                padding: 0 10px;
-                overflow-wrap: anywhere;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 16px 0 8px !important;
+                padding: 0 14px !important;
+                font-size: 22px !important;
+                line-height: 1.25 !important;
+                text-align: center !important;
+                overflow-wrap: anywhere !important;
+                word-break: break-word !important;
+                box-sizing: border-box !important;
             }
 
             .card > p {
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 0 10px !important;
+                padding: 0 10px !important;
                 font-size: 20px !important;
+                line-height: 1.3 !important;
+                text-align: center !important;
+                overflow-wrap: anywhere !important;
+                word-break: break-word !important;
+                box-sizing: border-box !important;
+            }
+
+            .card .badge[style],
+            .stock-badge {
+                max-width: calc(100% - 28px) !important;
+                box-sizing: border-box !important;
+                overflow-wrap: anywhere !important;
+                word-break: break-word !important;
             }
 
             .rating-box {
-                flex-wrap: wrap;
-                padding: 0 8px;
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 0 10px !important;
+                margin: 10px 0 !important;
+                display: flex !important;
+                flex-wrap: wrap !important;
+                justify-content: center !important;
+                align-items: center !important;
+                gap: 5px !important;
+                box-sizing: border-box !important;
+            }
+
+            .star-score {
+                max-width: 100% !important;
+                font-size: 14px !important;
+                overflow-wrap: anywhere !important;
+            }
+
+            .star-picker {
+                max-width: 100% !important;
+                gap: 1px !important;
+            }
+
+            .star-picker span {
+                font-size: 18px !important;
             }
 
             .size-info {
-                width: 100%;
-                padding: 0 8px;
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 0 10px !important;
+                margin: 10px 0 !important;
+                display: flex !important;
+                flex-wrap: wrap !important;
+                justify-content: center !important;
+                gap: 7px !important;
+                overflow: hidden !important;
+                box-sizing: border-box !important;
             }
 
             .size-label {
-                max-width: 100%;
+                max-width: 100% !important;
+                padding: 8px 10px !important;
                 font-size: 12px !important;
-                padding: 9px 11px !important;
-                white-space: nowrap;
+                line-height: 1.2 !important;
+                white-space: normal !important;
+                overflow-wrap: anywhere !important;
+                box-sizing: border-box !important;
             }
 
             .card button {
-                width: calc(100% - 30px) !important;
-                max-width: 320px;
-                margin-left: auto !important;
-                margin-right: auto !important;
+                display: block !important;
+                width: calc(100% - 28px) !important;
+                max-width: 360px !important;
+                min-width: 0 !important;
+                margin: 16px auto 0 !important;
+                padding: 13px 16px !important;
+                font-size: 15px !important;
+                line-height: 1.3 !important;
+                box-sizing: border-box !important;
             }
 
+            /* ---------- SHOPPING CART CALLOUT ---------- */
             .cart {
-                width: 100% !important;
-                padding: 35px 18px !important;
-                text-align: center;
+                width: calc(100% - 30px) !important;
+                max-width: calc(100% - 30px) !important;
+                min-width: 0 !important;
+                margin: 30px auto 34px !important;
+                padding: 38px 18px !important;
+                text-align: center !important;
+                border-radius: 22px !important;
+                overflow: hidden !important;
+                box-sizing: border-box !important;
             }
 
             .cart h2 {
-                font-size: 24px !important;
-                line-height: 1.3;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 0 18px !important;
+                padding: 0 !important;
+                font-size: clamp(23px, 6.5vw, 30px) !important;
+                line-height: 1.3 !important;
+                text-align: center !important;
+                overflow-wrap: normal !important;
+                word-break: normal !important;
             }
 
             .cart p {
-                font-size: 14px !important;
-                line-height: 1.5;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 auto 24px !important;
+                padding: 0 4px !important;
+                font-size: 15px !important;
+                line-height: 1.6 !important;
+                text-align: center !important;
+                overflow-wrap: normal !important;
+                word-break: normal !important;
+                box-sizing: border-box !important;
             }
 
             .checkout-btn {
-                display: inline-block;
-                max-width: 100%;
-                padding: 11px 18px !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                width: auto !important;
+                max-width: calc(100% - 10px) !important;
+                min-width: 0 !important;
+                margin: 0 auto !important;
+                padding: 13px 22px !important;
+                font-size: 15px !important;
+                line-height: 1.3 !important;
+                white-space: normal !important;
+                text-align: center !important;
+                box-sizing: border-box !important;
             }
 
+            /* ---------- FOOTER ---------- */
             footer {
-                width: 100%;
-                padding: 18px 12px !important;
-                text-align: center;
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
+                margin: 0 !important;
+                padding: 20px 12px !important;
+                text-align: center !important;
+                overflow: hidden !important;
+                box-sizing: border-box !important;
             }
 
             footer p {
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 !important;
                 font-size: 12px !important;
-                margin: 0;
+                line-height: 1.5 !important;
+                overflow-wrap: anywhere !important;
             }
 
+            /* ---------- IMAGE MODAL ---------- */
             .image-modal {
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
                 padding: 15px !important;
+                overflow: hidden !important;
+                box-sizing: border-box !important;
             }
 
             .full-image {
-                max-width: 95vw !important;
-                max-height: 85vh !important;
-                object-fit: contain;
+                display: block !important;
+                width: auto !important;
+                max-width: 92vw !important;
+                max-height: 82vh !important;
+                object-fit: contain !important;
+                margin: auto !important;
             }
         }
 
-        /* Smaller phones */
+        /* ---------- SMALL PHONES ---------- */
         @media (max-width: 380px) {
             header {
-                padding: 12px 10px !important;
+                padding: 15px 9px 19px !important;
             }
 
             header h2 {
-                font-size: 19px !important;
+                font-size: 21px !important;
+                margin-bottom: 15px !important;
             }
 
             header nav {
-                gap: 5px !important;
+                gap: 8px 10px !important;
             }
 
             header nav a {
-                font-size: 11px !important;
+                font-size: 13px !important;
             }
 
-            .nav-btn {
-                padding: 7px 9px !important;
+            header nav .nav-btn {
+                padding: 8px 13px !important;
             }
 
             .hero {
-                min-height: 300px !important;
-                padding: 45px 14px !important;
+                min-height: 360px !important;
+                padding: 48px 14px 48px !important;
             }
 
             .hero h1 {
                 font-size: 27px !important;
+                margin-bottom: 16px !important;
             }
 
             .hero p {
                 font-size: 13px !important;
+                line-height: 1.55 !important;
+                margin-bottom: 22px !important;
+            }
+
+            .hero button {
+                font-size: 14px !important;
+                padding: 12px 20px !important;
             }
 
             .title {
-                font-size: 22px !important;
+                font-size: 23px !important;
+                padding: 30px 10px 20px !important;
             }
 
             .products {
@@ -676,147 +888,33 @@ if ($isLoggedIn) {
                 padding-right: 10px !important;
             }
 
-            .card {
-                border-radius: 15px !important;
-            }
-
             .card h3 {
-                font-size: 19px !important;
+                font-size: 20px !important;
             }
 
             .card > p {
                 font-size: 18px !important;
             }
 
-            .size-label {
-                font-size: 11px !important;
-                padding: 8px 8px !important;
-            }
-        }
-
-        /* =========================================================
-           FINAL MOBILE OVERFLOW FIX
-           Keep every feature inside the viewport.
-           ========================================================= */
-        @media (max-width: 768px) {
-            * {
-                max-width: 100%;
-            }
-
-            body {
-                overflow-x: hidden !important;
-            }
-
-            header {
-                width: 100vw !important;
-                max-width: 100vw !important;
-                overflow: hidden !important;
-            }
-
-            header nav {
-                width: 100% !important;
-                max-width: 100% !important;
-                overflow: hidden !important;
-            }
-
-            header nav a {
-                display: inline-flex !important;
-                align-items: center;
-                justify-content: center;
-                min-width: 0 !important;
-            }
-
-            .hero {
-                width: 100vw !important;
-                max-width: 100vw !important;
-                overflow: hidden !important;
-            }
-
-            .products {
-                width: 100% !important;
-                max-width: 100% !important;
-                overflow: hidden !important;
-            }
-
-            .card {
-                width: 100% !important;
-                max-width: 100% !important;
-                overflow: hidden !important;
-            }
-
-            .card button,
-            .checkout-btn {
-                max-width: calc(100% - 20px) !important;
-                box-sizing: border-box !important;
-            }
-
             .cart {
-                width: 100vw !important;
-                max-width: 100vw !important;
-                overflow: hidden !important;
-            }
-
-            .cart h2,
-            .cart p {
-                max-width: 100% !important;
-                overflow-wrap: anywhere;
-            }
-
-            footer {
-                width: 100vw !important;
-                max-width: 100vw !important;
-                overflow: hidden !important;
-            }
-
-            /* Prevent long product names / labels from pushing the page wider */
-            .card h3,
-            .card p,
-            .badge,
-            .stock-badge,
-            .size-label,
-            .star-score {
-                overflow-wrap: anywhere !important;
-                word-break: break-word !important;
-            }
-
-            /* Keep size options inside card */
-            .size-info {
-                max-width: 100% !important;
-                overflow: hidden !important;
-            }
-
-            /* Modal must stay within the phone viewport */
-            .image-modal {
-                width: 100vw !important;
-                max-width: 100vw !important;
-                overflow: hidden !important;
-            }
-
-            .full-image {
-                max-width: 92vw !important;
-                max-height: 82vh !important;
-            }
-        }
-
-        @media (max-width: 380px) {
-            header nav a {
-                font-size: 10px !important;
-            }
-
-            .nav-btn {
-                padding: 6px 8px !important;
-            }
-
-            .badge {
-                margin-left: 2px !important;
-                padding: 2px 5px !important;
+                width: calc(100% - 20px) !important;
+                max-width: calc(100% - 20px) !important;
+                padding: 32px 14px !important;
             }
 
             .cart h2 {
-                font-size: 21px !important;
+                font-size: 22px !important;
+            }
+
+            .cart p {
+                font-size: 13px !important;
+            }
+
+            .checkout-btn {
+                padding: 12px 17px !important;
+                font-size: 14px !important;
             }
         }
-
     </style>
 </head>
 <body>
