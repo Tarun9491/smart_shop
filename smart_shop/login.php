@@ -138,12 +138,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
             min-height: 100vh;
 
             background:
-                linear-gradient(
-                    135deg,
-                    #667eea,
-                    #764ba2,
-                    #ff758c
-                );
+    linear-gradient(
+        135deg,
+        #f5efe6 0%,
+        #e8dccb 50%,
+        #d6c2a8 100%
+    );
 
             display: flex;
 
