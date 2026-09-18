@@ -530,12 +530,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
 
                 padding: 15px;
 
+                background-image:
+                    linear-gradient(
+                        rgba(55, 38, 25, 0.18),
+                        rgba(55, 38, 25, 0.18)
+                    ),
+                    url('ChatGPT%20Image%20Sep%2018%2C%202026%2C%2005_21_18%20PM.png');
+
                 background-attachment: scroll;
 
                 background-position: center center;
 
-                /* Keep complete background image */
-                background-size: 100% 100%;
+                background-repeat: no-repeat;
+
+                /* Mobile portrait background */
+                background-size: cover;
             }
 
 
@@ -584,9 +593,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
 
                 padding: 10px;
 
+                background-image:
+                    linear-gradient(
+                        rgba(55, 38, 25, 0.18),
+                        rgba(55, 38, 25, 0.18)
+                    ),
+                    url('ChatGPT%20Image%20Sep%2018%2C%202026%2C%2005_21_18%20PM.png');
+
                 background-position: center center;
 
-                background-size: 100% 100%;
+                background-repeat: no-repeat;
+
+                background-size: cover;
             }
 
 
