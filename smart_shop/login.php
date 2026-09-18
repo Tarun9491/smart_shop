@@ -441,14 +441,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_login']))  {
 
                 padding: 15px;
 
-                /*
-                 * Keep complete image visible
-                 */
-                background-size: 100% 100%;
+                background-image:
+                    linear-gradient(
+                        rgba(55, 38, 25, 0.18),
+                        rgba(55, 38, 25, 0.18)
+                    ),
+                    url('ChatGPT%20Image%20Sep%2018%2C%202026%2C%2005_21_18%20PM.png');
+
+                background-size: cover;
 
                 background-position: center;
 
                 background-repeat: no-repeat;
+
+                background-attachment: scroll;
 
                 overflow: hidden;
             }
@@ -503,9 +509,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_login']))  {
 
                 padding: 10px;
 
-                background-size: 100% 100%;
+                background-image:
+                    linear-gradient(
+                        rgba(55, 38, 25, 0.18),
+                        rgba(55, 38, 25, 0.18)
+                    ),
+                    url('ChatGPT%20Image%20Sep%2018%2C%202026%2C%2005_21_18%20PM.png');
+
+                background-size: cover;
 
                 background-position: center;
+
+                background-repeat: no-repeat;
+
+                background-attachment: scroll;
 
                 overflow: hidden;
             }
