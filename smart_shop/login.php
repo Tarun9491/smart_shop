@@ -432,37 +432,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 </head>
 
 
-<body>
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
 
-    <div class="login-box">
+    background-image:
+        linear-gradient(
+            rgba(55, 38, 25, 0.18),
+            rgba(55, 38, 25, 0.18)
+        ),
+        url('images/guru-woodworks-login-bg.png');
 
-        <h2>🔐 Customer Login</h2>
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-        <?php if (!empty($error)): ?>
-
-            <div class="error">
-
-                <?php
-                echo htmlspecialchars(
-                    $error,
-                    ENT_QUOTES,
-                    'UTF-8'
-                );
-                ?>
-
-            </div>
-
-        <?php endif; ?>
-
-
-        <form
-            method="POST"
-            action="login.php"
-        >
-
-            <?php echo csrf_field(); ?>
-
+    padding: 20px;
+}
 
             <!-- Email OR Mobile -->
 
