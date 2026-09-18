@@ -132,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
                     rgba(55, 38, 25, 0.15),
                     rgba(55, 38, 25, 0.15)
                 ),
-                url('images/guru-woodworks-login-bg.png');
+                url('guru-woodworks-login-bg.png');
 
             background-size: cover;
 
