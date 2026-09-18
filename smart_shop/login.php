@@ -132,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
                     rgba(55, 38, 25, 0.15),
                     rgba(55, 38, 25, 0.15)
                 ),
-                url('guru-woodworks-login-bg.png');
+                url('ChatGPT%20Image%20Sep%2018%2C%202026%2C%2003_50_08%20PM.png');
 
             background-size: cover;
 
