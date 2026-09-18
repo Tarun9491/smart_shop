@@ -634,7 +634,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_login']))  {
 
             <button
                 type="submit"
-                name="login"
+                name="submit_login"
+                value="1"
             >
                 Login
             </button>
