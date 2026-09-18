@@ -11,7 +11,7 @@ if (!empty($_SESSION['user_id'])) {
 
 $error = '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_login']))  {
 
     // Verify CSRF token
     if (!verify_csrf_token($_POST['csrf_token'] ?? '')) {
