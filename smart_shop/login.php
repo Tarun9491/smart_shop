@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
                         session_regenerate_id(true);
 
                         // Store user information
-                        $_SESSION['user_id'] = (int) $row['id'];
+                        $_SESSION['user_id'] = (int)$row['id'];
                         $_SESSION['user_name'] = $row['name'];
                         $_SESSION['user_email'] = $row['email'];
 
@@ -69,7 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 
                         $stmt->close();
 
-                        // Redirect to home
                         header("Location: index.php");
                         exit();
 
@@ -105,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
     <title>Login - Guru Woodworks</title>
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;400;500;600&display=swap"
         rel="stylesheet"
     >
 
@@ -115,39 +114,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
             box-sizing: border-box;
         }
 
+
         /* =========================================
            PAGE BACKGROUND
            ========================================= */
 
-       body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
+        body {
 
-    min-height: 100vh;
-    width: 100%;
+            margin: 0;
 
-    background-image:
-        linear-gradient(
-            rgba(55, 38, 25, 0.15),
-            rgba(55, 38, 25, 0.15)
-        ),
-        url('ChatGPT%20Image%20Sep%2018%2C%202026%2C%2003_50_08%20PM.png');
+            font-family: 'Poppins', sans-serif;
 
-    /* IMPORTANT: show the complete image */
-    background-size: 100% 100%;
+            min-height: 100vh;
 
-    background-position: center;
-    background-repeat: no-repeat;
+            width: 100%;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+            background-image:
 
-    padding: 20px;
+                linear-gradient(
+                    rgba(55, 38, 25, 0.15),
+                    rgba(55, 38, 25, 0.15)
+                ),
 
-    /* Prevent horizontal/vertical overflow */
-    overflow: hidden;
-}
+                url('ChatGPT%20Image%20Sep%2018%2C%202026%2C%2003_50_08%20PM.png');
+
+            /*
+             * Show the complete image.
+             * No cropping.
+             */
+
+            background-size: 100% 100%;
+
+            background-position: center;
+
+            background-repeat: no-repeat;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 20px;
+
+            overflow: hidden;
+        }
 
 
         /* =========================================
@@ -158,13 +169,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 
             background: rgba(255, 255, 255, 0.96);
 
-            padding: 40px;
+            padding: 30px 28px;
 
             border-radius: 20px;
 
             width: 100%;
 
-            max-width: 360px;
+            max-width: 340px;
 
             text-align: center;
 
@@ -216,15 +227,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 
         h2 {
 
-            margin-top: 0;
-
-            margin-bottom: 20px;
+            margin: 0 0 20px 0;
 
             color: #4b321f;
 
-            font-weight: 600;
+            font-size: 23px;
 
-            font-size: 25px;
+            font-weight: 600;
         }
 
 
@@ -234,9 +243,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 
         input {
 
+            display: block;
+
             width: 100%;
 
-            padding: 13px;
+            height: 46px;
+
+            padding: 0 13px;
 
             margin: 10px 0;
 
@@ -252,7 +265,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 
             font-family: inherit;
 
-            font-size: 14px;
+            font-size: 13px;
 
             transition: 0.25s;
         }
@@ -284,28 +297,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 
             width: 100%;
 
-            padding: 13px;
+            height: 47px;
 
             margin-top: 10px;
 
             border: none;
 
-            border-radius: 30px;
+            border-radius: 28px;
 
             background:
                 linear-gradient(
-                    45deg,
+                    135deg,
                     #6f4e37,
                     #a87545
                 );
 
             color: #ffffff;
 
-            font-weight: 600;
-
-            font-size: 16px;
-
             font-family: inherit;
+
+            font-size: 15px;
+
+            font-weight: 600;
 
             cursor: pointer;
 
@@ -313,7 +326,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 
             box-shadow:
                 0 7px 18px
-                rgba(92, 61, 38, 0.20);
+                rgba(92, 61, 38, 0.22);
         }
 
 
@@ -323,7 +336,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 
             background:
                 linear-gradient(
-                    45deg,
+                    135deg,
                     #543a29,
                     #8b5e34
                 );
@@ -415,18 +428,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 
 
         /* =========================================
-           MOBILE RESPONSIVE
+           MOBILE
            ========================================= */
 
         @media (max-width: 600px) {
 
             body {
 
-                background-attachment: scroll;
+                min-height: 100vh;
 
-                background-position: center center;
+                width: 100%;
 
                 padding: 15px;
+
+                /*
+                 * Keep complete image visible
+                 */
+                background-size: 100% 100%;
+
+                background-position: center;
+
+                background-repeat: no-repeat;
+
+                overflow: hidden;
             }
 
 
@@ -434,9 +458,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 
                 width: 100%;
 
-                max-width: 380px;
+                max-width: 340px;
 
-                padding: 32px 24px;
+                padding: 30px 24px;
 
                 border-radius: 20px;
             }
@@ -445,18 +469,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
             h2 {
 
                 font-size: 23px;
+
+                margin-bottom: 20px;
             }
 
 
             input {
 
-                padding: 13px;
+                height: 46px;
+
+                padding: 0 13px;
+
+                font-size: 13px;
             }
 
 
             button {
 
-                padding: 13px;
+                height: 47px;
+
+                font-size: 15px;
             }
         }
 
@@ -467,15 +499,67 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 
         @media (max-width: 380px) {
 
+            body {
+
+                padding: 10px;
+
+                background-size: 100% 100%;
+
+                background-position: center;
+
+                overflow: hidden;
+            }
+
+
             .login-box {
 
-                padding: 28px 20px;
+                width: 100%;
+
+                max-width: 320px;
+
+                padding: 26px 20px;
+
+                border-radius: 18px;
             }
 
 
             h2 {
 
                 font-size: 21px;
+
+                margin-bottom: 17px;
+            }
+
+
+            input {
+
+                height: 44px;
+
+                margin: 8px 0;
+
+                font-size: 13px;
+            }
+
+
+            button {
+
+                height: 45px;
+
+                margin-top: 8px;
+
+                font-size: 14px;
+            }
+
+
+            .links {
+
+                margin-top: 17px;
+            }
+
+
+            .links a {
+
+                font-size: 13px;
             }
         }
 
@@ -508,9 +592,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
         <?php endif; ?>
 
 
-        <!-- =====================================
-             LOGIN FORM
-             ===================================== -->
+        <!-- LOGIN FORM -->
 
         <form
             method="POST"
@@ -560,9 +642,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
         </form>
 
 
-        <!-- =====================================
-             LINKS
-             ===================================== -->
+        <!-- LINKS -->
 
         <div class="links">
 
