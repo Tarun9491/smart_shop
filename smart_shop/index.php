@@ -693,6 +693,130 @@ if ($isLoggedIn) {
                 padding: 8px 8px !important;
             }
         }
+
+        /* =========================================================
+           FINAL MOBILE OVERFLOW FIX
+           Keep every feature inside the viewport.
+           ========================================================= */
+        @media (max-width: 768px) {
+            * {
+                max-width: 100%;
+            }
+
+            body {
+                overflow-x: hidden !important;
+            }
+
+            header {
+                width: 100vw !important;
+                max-width: 100vw !important;
+                overflow: hidden !important;
+            }
+
+            header nav {
+                width: 100% !important;
+                max-width: 100% !important;
+                overflow: hidden !important;
+            }
+
+            header nav a {
+                display: inline-flex !important;
+                align-items: center;
+                justify-content: center;
+                min-width: 0 !important;
+            }
+
+            .hero {
+                width: 100vw !important;
+                max-width: 100vw !important;
+                overflow: hidden !important;
+            }
+
+            .products {
+                width: 100% !important;
+                max-width: 100% !important;
+                overflow: hidden !important;
+            }
+
+            .card {
+                width: 100% !important;
+                max-width: 100% !important;
+                overflow: hidden !important;
+            }
+
+            .card button,
+            .checkout-btn {
+                max-width: calc(100% - 20px) !important;
+                box-sizing: border-box !important;
+            }
+
+            .cart {
+                width: 100vw !important;
+                max-width: 100vw !important;
+                overflow: hidden !important;
+            }
+
+            .cart h2,
+            .cart p {
+                max-width: 100% !important;
+                overflow-wrap: anywhere;
+            }
+
+            footer {
+                width: 100vw !important;
+                max-width: 100vw !important;
+                overflow: hidden !important;
+            }
+
+            /* Prevent long product names / labels from pushing the page wider */
+            .card h3,
+            .card p,
+            .badge,
+            .stock-badge,
+            .size-label,
+            .star-score {
+                overflow-wrap: anywhere !important;
+                word-break: break-word !important;
+            }
+
+            /* Keep size options inside card */
+            .size-info {
+                max-width: 100% !important;
+                overflow: hidden !important;
+            }
+
+            /* Modal must stay within the phone viewport */
+            .image-modal {
+                width: 100vw !important;
+                max-width: 100vw !important;
+                overflow: hidden !important;
+            }
+
+            .full-image {
+                max-width: 92vw !important;
+                max-height: 82vh !important;
+            }
+        }
+
+        @media (max-width: 380px) {
+            header nav a {
+                font-size: 10px !important;
+            }
+
+            .nav-btn {
+                padding: 6px 8px !important;
+            }
+
+            .badge {
+                margin-left: 2px !important;
+                padding: 2px 5px !important;
+            }
+
+            .cart h2 {
+                font-size: 21px !important;
+            }
+        }
+
     </style>
 </head>
 <body>
