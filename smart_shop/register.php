@@ -25,7 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
         // Validate form fields
         // ---------------------------------
 
-        if (empty($name) || empty($email) || empty($mobile) || empty($password)) {
+        if (
+            empty($name) ||
+            empty($email) ||
+            empty($mobile) ||
+            empty($password)
+        ) {
 
             $error = "All fields are required.";
 
@@ -51,89 +56,112 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
                 "SELECT id FROM users WHERE email = ? LIMIT 1"
             );
 
-            $checkEmailStmt->bind_param("s", $email);
-            $checkEmailStmt->execute();
+            if (!$checkEmailStmt) {
 
-            $checkEmailRes = $checkEmailStmt->get_result();
-
-            if ($checkEmailRes->num_rows > 0) {
-
-                $error = "This email is already registered. Please login.";
+                $error = "Something went wrong. Please try again.";
 
             } else {
 
-                // ---------------------------------
-                // Check if mobile already exists
-                // ---------------------------------
+                $checkEmailStmt->bind_param("s", $email);
+                $checkEmailStmt->execute();
 
-                $checkMobileStmt = $conn->prepare(
-                    "SELECT id FROM users WHERE mobile = ? LIMIT 1"
-                );
+                $checkEmailRes = $checkEmailStmt->get_result();
 
-                $checkMobileStmt->bind_param("s", $mobile);
-                $checkMobileStmt->execute();
+                if ($checkEmailRes->num_rows > 0) {
 
-                $checkMobileRes = $checkMobileStmt->get_result();
-
-                if ($checkMobileRes->num_rows > 0) {
-
-                    $error = "This mobile number is already registered. Please login.";
+                    $error = "This email is already registered. Please login.";
 
                 } else {
 
                     // ---------------------------------
-                    // Hash password
+                    // Check if mobile already exists
                     // ---------------------------------
 
-                    $hashedPassword = password_hash(
-                        $password,
-                        PASSWORD_DEFAULT
+                    $checkMobileStmt = $conn->prepare(
+                        "SELECT id FROM users WHERE mobile = ? LIMIT 1"
                     );
 
-                    // ---------------------------------
-                    // Insert new user
-                    // ---------------------------------
+                    if (!$checkMobileStmt) {
 
-                    $insStmt = $conn->prepare(
-                        "INSERT INTO users
-                        (name, email, mobile, password)
-                        VALUES (?, ?, ?, ?)"
-                    );
-
-                    $insStmt->bind_param(
-                        "ssss",
-                        $name,
-                        $email,
-                        $mobile,
-                        $hashedPassword
-                    );
-
-                    if ($insStmt->execute()) {
-
-                        // Registration successful
-                        header("Location: login.php?registered=1");
-                        exit();
+                        $error = "Something went wrong. Please try again.";
 
                     } else {
 
-                        // Handle duplicate entry from database
-                        if ($conn->errno == 1062) {
+                        $checkMobileStmt->bind_param("s", $mobile);
+                        $checkMobileStmt->execute();
 
-                            $error = "Email or mobile number is already registered.";
+                        $checkMobileRes = $checkMobileStmt->get_result();
+
+                        if ($checkMobileRes->num_rows > 0) {
+
+                            $error = "This mobile number is already registered. Please login.";
 
                         } else {
 
-                            $error = "Registration failed. Please try again.";
-                        }
-                    }
+                            // ---------------------------------
+                            // Hash password
+                            // ---------------------------------
 
-                    $insStmt->close();
+                            $hashedPassword = password_hash(
+                                $password,
+                                PASSWORD_DEFAULT
+                            );
+
+                            // ---------------------------------
+                            // Insert new user
+                            // ---------------------------------
+
+                            $insStmt = $conn->prepare(
+                                "INSERT INTO users
+                                (name, email, mobile, password)
+                                VALUES (?, ?, ?, ?)"
+                            );
+
+                            if (!$insStmt) {
+
+                                $error = "Registration failed. Please try again.";
+
+                            } else {
+
+                                $insStmt->bind_param(
+                                    "ssss",
+                                    $name,
+                                    $email,
+                                    $mobile,
+                                    $hashedPassword
+                                );
+
+                                if ($insStmt->execute()) {
+
+                                    // Registration successful
+                                    header("Location: login.php?registered=1");
+                                    exit();
+
+                                } else {
+
+                                    // Handle duplicate entry
+                                    if ($conn->errno == 1062) {
+
+                                        $error =
+                                            "Email or mobile number is already registered.";
+
+                                    } else {
+
+                                        $error =
+                                            "Registration failed. Please try again.";
+                                    }
+                                }
+
+                                $insStmt->close();
+                            }
+                        }
+
+                        $checkMobileStmt->close();
+                    }
                 }
 
-                $checkMobileStmt->close();
+                $checkEmailStmt->close();
             }
-
-            $checkEmailStmt->close();
         }
     }
 }
@@ -154,58 +182,85 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
     <title>Register - Guru Woodworks</title>
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
         rel="stylesheet"
     >
 
     <style>
 
+        /* =========================================
+           RESET
+           ========================================= */
+
         * {
             box-sizing: border-box;
         }
 
-        /* ---------------------------------
-           Existing page background
-           --------------------------------- */
 
-       background-image:
-    linear-gradient(
-        rgba(55, 38, 25, 0.15),
-        rgba(55, 38, 25, 0.15)
-    ),
-    url('ChatGPT%20Image%20Sep%2018%2C%202026%2C%2003_50_08%20PM.png');
+        /* =========================================
+           BODY
+           ========================================= */
 
-background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
-background-attachment: fixed;
+        body {
 
-        /* ---------------------------------
-           Registration Card
-           --------------------------------- */
+            margin: 0;
+
+            font-family: 'Poppins', sans-serif;
+
+            min-height: 100vh;
+
+            background-image:
+
+                linear-gradient(
+                    rgba(55, 38, 25, 0.18),
+                    rgba(55, 38, 25, 0.18)
+                ),
+
+                url('guru-woodworks-login-bg.png');
+
+            background-size: cover;
+
+            background-position: center;
+
+            background-repeat: no-repeat;
+
+            background-attachment: fixed;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 20px;
+        }
+
+
+        /* =========================================
+           REGISTRATION CARD
+           ========================================= */
 
         .register-box {
 
-            background: #ffffff;
-
-            padding: 40px;
-
-            border-radius: 20px;
-
             width: 100%;
 
-            max-width: 360px;
+            max-width: 380px;
+
+            padding: 38px 34px;
+
+            background: rgba(255, 255, 255, 0.96);
+
+            border-radius: 22px;
+
+            border: 1px solid rgba(255, 255, 255, 0.8);
+
+            box-shadow:
+                0 20px 50px
+                rgba(45, 30, 20, 0.30);
 
             text-align: center;
 
             color: #3b2a1d;
-
-            border:
-                1px solid #eadcc9;
-
-            box-shadow:
-                0 10px 35px
-                rgba(70, 45, 25, 0.18);
 
             position: relative;
 
@@ -213,9 +268,9 @@ background-attachment: fixed;
         }
 
 
-        /* ---------------------------------
-           Premium wood top line
-           --------------------------------- */
+        /* =========================================
+           WOOD TOP BORDER
+           ========================================= */
 
         .register-box::before {
 
@@ -229,62 +284,70 @@ background-attachment: fixed;
 
             width: 100%;
 
-            height: 4px;
+            height: 5px;
 
             background:
                 linear-gradient(
                     90deg,
-                    #6f4e37,
-                    #c49a6c,
-                    #6f4e37
+                    #654321,
+                    #b47b45,
+                    #d2a06b,
+                    #b47b45,
+                    #654321
                 );
         }
 
 
-        /* ---------------------------------
-           Heading
-           --------------------------------- */
+        /* =========================================
+           HEADING
+           ========================================= */
 
         h2 {
 
-            margin-top: 0;
-
-            margin-bottom: 20px;
+            margin: 0 0 24px 0;
 
             color: #4b321f;
+
+            font-size: 26px;
 
             font-weight: 600;
         }
 
 
-        /* ---------------------------------
-           Input fields
-           --------------------------------- */
+        /* =========================================
+           INPUT FIELDS
+           ========================================= */
 
         input {
 
+            display: block;
+
             width: 100%;
 
-            padding: 13px;
+            height: 50px;
 
-            margin: 10px 0;
+            padding: 0 15px;
 
-            border:
-                1px solid #dfd0bd;
+            margin: 12px 0;
 
-            border-radius: 10px;
+            border: 1px solid #dfcdb8;
+
+            border-radius: 11px;
 
             outline: none;
 
-            background: #fffaf4;
+            background: #fffaf5;
 
             color: #3b2a1d;
 
-            font-family: inherit;
+            font-family: 'Poppins', sans-serif;
 
             font-size: 14px;
 
-            transition: 0.25s;
+            transition:
+                border-color 0.25s,
+                box-shadow 0.25s,
+                background 0.25s;
         }
 
 
@@ -296,27 +359,37 @@ background-attachment: fixed;
 
         input:focus {
 
-            border-color: #9a6b3f;
+            border-color: #a87545;
 
             background: #ffffff;
 
             box-shadow:
                 0 0 0 3px
-                rgba(154, 107, 63, 0.12);
+                rgba(168, 117, 69, 0.13);
         }
 
 
-        /* ---------------------------------
-           Register Button
-           --------------------------------- */
+        /* =========================================
+           MOBILE INPUT
+           ========================================= */
+
+        input[name="mobile"] {
+
+            letter-spacing: 0.5px;
+        }
+
+
+        /* =========================================
+           REGISTER BUTTON
+           ========================================= */
 
         button {
 
             width: 100%;
 
-            padding: 13px;
+            height: 52px;
 
-            margin-top: 10px;
+            margin-top: 12px;
 
             border: none;
 
@@ -324,50 +397,65 @@ background-attachment: fixed;
 
             background:
                 linear-gradient(
-                    45deg,
+                    135deg,
                     #6f4e37,
                     #a87545
                 );
 
             color: #ffffff;
 
-            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
 
             font-size: 16px;
 
+            font-weight: 600;
+
             cursor: pointer;
 
-            transition: 0.3s;
+            transition: all 0.3s ease;
+
+            box-shadow:
+                0 8px 20px
+                rgba(91, 61, 38, 0.25);
         }
 
 
         button:hover {
 
-            transform: scale(1.03);
+            transform: translateY(-2px);
 
             background:
                 linear-gradient(
-                    45deg,
+                    135deg,
                     #543a29,
                     #8b5e34
                 );
+
+            box-shadow:
+                0 12px 25px
+                rgba(91, 61, 38, 0.32);
         }
 
 
-        /* ---------------------------------
-           Error message
-           --------------------------------- */
+        button:active {
+
+            transform: translateY(0);
+        }
+
+
+        /* =========================================
+           ERROR MESSAGE
+           ========================================= */
 
         .error {
 
-            background: #fff4f2;
+            background: #fff3f1;
 
-            border:
-                1px solid #e7b9b1;
+            border: 1px solid #e7b9b1;
 
-            padding: 10px;
+            padding: 11px 12px;
 
-            border-radius: 8px;
+            border-radius: 9px;
 
             color: #a33a32;
 
@@ -376,16 +464,18 @@ background-attachment: fixed;
             font-size: 13px;
 
             text-align: left;
+
+            line-height: 1.5;
         }
 
 
-        /* ---------------------------------
-           Links
-           --------------------------------- */
+        /* =========================================
+           LINKS
+           ========================================= */
 
         .links {
 
-            margin-top: 20px;
+            margin-top: 22px;
 
             font-size: 13px;
         }
@@ -399,19 +489,19 @@ background-attachment: fixed;
 
             text-decoration: underline;
 
-            transition: 0.2s;
+            transition: color 0.2s ease;
         }
 
 
         .links a:hover {
 
-            color: #b07a45;
+            color: #b47b45;
         }
 
 
-        /* ---------------------------------
-           Back link
-           --------------------------------- */
+        /* =========================================
+           BACK LINK
+           ========================================= */
 
         .back-link {
 
@@ -429,27 +519,72 @@ background-attachment: fixed;
         }
 
 
-        /* ---------------------------------
-           Mobile responsive
-           --------------------------------- */
+        /* =========================================
+           MOBILE RESPONSIVE
+           ========================================= */
 
-        @media (max-width: 480px) {
+        @media (max-width: 600px) {
 
             body {
 
                 padding: 15px;
+
+                background-attachment: scroll;
+
+                background-position: center center;
             }
 
+
             .register-box {
+
+                max-width: 390px;
 
                 padding: 32px 24px;
 
                 border-radius: 20px;
             }
 
+
             h2 {
 
                 font-size: 23px;
+
+                margin-bottom: 20px;
+            }
+
+
+            input {
+
+                height: 49px;
+
+                font-size: 14px;
+            }
+
+
+            button {
+
+                height: 50px;
+
+                font-size: 15px;
+            }
+        }
+
+
+        /* =========================================
+           SMALL MOBILE
+           ========================================= */
+
+        @media (max-width: 380px) {
+
+            .register-box {
+
+                padding: 28px 20px;
+            }
+
+
+            h2 {
+
+                font-size: 21px;
             }
         }
 
@@ -481,6 +616,10 @@ background-attachment: fixed;
 
         <?php endif; ?>
 
+
+        <!-- =====================================
+             REGISTRATION FORM
+             ===================================== -->
 
         <form
             method="POST"
@@ -556,7 +695,7 @@ background-attachment: fixed;
             >
 
 
-            <!-- Register -->
+            <!-- Register Button -->
 
             <button
                 type="submit"
@@ -567,6 +706,10 @@ background-attachment: fixed;
 
         </form>
 
+
+        <!-- =====================================
+             LINKS
+             ===================================== -->
 
         <div class="links">
 
