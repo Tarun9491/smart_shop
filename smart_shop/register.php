@@ -168,30 +168,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
            Existing page background
            --------------------------------- */
 
-        body {
-            margin: 0;
+       background-image:
+    linear-gradient(
+        rgba(55, 38, 25, 0.15),
+        rgba(55, 38, 25, 0.15)
+    ),
+    url('ChatGPT%20Image%20Sep%2018%2C%202026%2C%2003_50_08%20PM.png');
 
-            font-family: 'Poppins', sans-serif;
-
-            min-height: 100vh;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #ff758c,
-                    #ff7eb3,
-                    #667eea
-                );
-
-            display: flex;
-
-            justify-content: center;
-
-            align-items: center;
-
-            padding: 20px;
-        }
-
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+background-attachment: fixed;
 
         /* ---------------------------------
            Registration Card
