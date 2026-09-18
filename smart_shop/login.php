@@ -31,10 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 
         } else {
 
-            // -----------------------------------------
-            // Find user using Email OR Mobile Number
-            // -----------------------------------------
-
+            // Find user using email OR mobile number
             $stmt = $conn->prepare(
                 "SELECT id, name, email, mobile, password
                  FROM users
@@ -49,28 +46,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
             } else {
 
                 $stmt->bind_param("ss", $login, $login);
-
                 $stmt->execute();
 
                 $result = $stmt->get_result();
 
-                // -----------------------------------------
-                // Check user
-                // -----------------------------------------
-
                 if ($row = $result->fetch_assoc()) {
 
-                    // -----------------------------------------
                     // Verify password
-                    // -----------------------------------------
-
                     if (password_verify($password, $row['password'])) {
 
-                        // Regenerate session ID for security
+                        // Regenerate session ID
                         session_regenerate_id(true);
 
-                        // Store user information in session
-                        $_SESSION['user_id'] = (int)$row['id'];
+                        // Store user information
+                        $_SESSION['user_id'] = (int) $row['id'];
                         $_SESSION['user_name'] = $row['name'];
                         $_SESSION['user_email'] = $row['email'];
 
@@ -126,9 +115,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
             box-sizing: border-box;
         }
 
-        /* -----------------------------------------
-           Page Background
-           ----------------------------------------- */
+        /* =========================================
+           PAGE BACKGROUND
+           ========================================= */
 
         body {
             margin: 0;
@@ -137,13 +126,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 
             min-height: 100vh;
 
-            background:
-    linear-gradient(
-        135deg,
-        #f5efe6 0%,
-        #e8dccb 50%,
-        #d6c2a8 100%
-    );
+            /* Furniture background image */
+            background-image:
+                linear-gradient(
+                    rgba(55, 38, 25, 0.15),
+                    rgba(55, 38, 25, 0.15)
+                ),
+                url('images/guru-woodworks-login-bg.png');
+
+            background-size: cover;
+
+            background-position: center;
+
+            background-repeat: no-repeat;
+
+            background-attachment: fixed;
 
             display: flex;
 
@@ -155,13 +152,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
         }
 
 
-        /* -----------------------------------------
-           Login Card
-           ----------------------------------------- */
+        /* =========================================
+           LOGIN CARD
+           ========================================= */
 
         .login-box {
 
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.96);
 
             padding: 40px;
 
@@ -175,12 +172,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 
             color: #3b2a1d;
 
-            border:
-                1px solid #eadcc9;
+            border: 1px solid #eadcc9;
 
             box-shadow:
-                0 10px 35px
-                rgba(70, 45, 25, 0.18);
+                0 15px 40px
+                rgba(70, 45, 25, 0.25);
 
             position: relative;
 
@@ -188,9 +184,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
         }
 
 
-        /* -----------------------------------------
-           Premium Wood Top Line
-           ----------------------------------------- */
+        /* =========================================
+           TOP WOOD COLOR LINE
+           ========================================= */
 
         .login-box::before {
 
@@ -216,9 +212,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
         }
 
 
-        /* -----------------------------------------
-           Heading
-           ----------------------------------------- */
+        /* =========================================
+           HEADING
+           ========================================= */
 
         h2 {
 
@@ -229,12 +225,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
             color: #4b321f;
 
             font-weight: 600;
+
+            font-size: 25px;
         }
 
 
-        /* -----------------------------------------
-           Input Fields
-           ----------------------------------------- */
+        /* =========================================
+           INPUT FIELDS
+           ========================================= */
 
         input {
 
@@ -244,8 +242,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 
             margin: 10px 0;
 
-            border:
-                1px solid #dfd0bd;
+            border: 1px solid #dfd0bd;
 
             border-radius: 10px;
 
@@ -281,9 +278,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
         }
 
 
-        /* -----------------------------------------
-           Login Button
-           ----------------------------------------- */
+        /* =========================================
+           LOGIN BUTTON
+           ========================================= */
 
         button {
 
@@ -310,15 +307,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 
             font-size: 16px;
 
+            font-family: inherit;
+
             cursor: pointer;
 
             transition: 0.3s;
+
+            box-shadow:
+                0 7px 18px
+                rgba(92, 61, 38, 0.20);
         }
 
 
         button:hover {
 
-            transform: scale(1.03);
+            transform: translateY(-2px);
 
             background:
                 linear-gradient(
@@ -326,19 +329,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
                     #543a29,
                     #8b5e34
                 );
+
+            box-shadow:
+                0 10px 22px
+                rgba(92, 61, 38, 0.28);
         }
 
 
-        /* -----------------------------------------
-           Error Message
-           ----------------------------------------- */
+        button:active {
+
+            transform: translateY(0);
+        }
+
+
+        /* =========================================
+           ERROR MESSAGE
+           ========================================= */
 
         .error {
 
             background: #fff4f2;
 
-            border:
-                1px solid #e7b9b1;
+            border: 1px solid #e7b9b1;
 
             padding: 10px;
 
@@ -354,9 +366,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
         }
 
 
-        /* -----------------------------------------
-           Links
-           ----------------------------------------- */
+        /* =========================================
+           LINKS
+           ========================================= */
 
         .links {
 
@@ -384,9 +396,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
         }
 
 
-        /* -----------------------------------------
-           Back Link
-           ----------------------------------------- */
+        /* =========================================
+           BACK LINK
+           ========================================= */
 
         .back-link {
 
@@ -404,26 +416,68 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
         }
 
 
-        /* -----------------------------------------
-           Mobile Responsive
-           ----------------------------------------- */
+        /* =========================================
+           MOBILE RESPONSIVE
+           ========================================= */
 
-        @media (max-width: 480px) {
+        @media (max-width: 600px) {
 
             body {
+
+                background-attachment: scroll;
+
+                background-position: center center;
+
                 padding: 15px;
             }
 
+
             .login-box {
+
+                width: 100%;
+
+                max-width: 380px;
 
                 padding: 32px 24px;
 
                 border-radius: 20px;
             }
 
+
             h2 {
 
                 font-size: 23px;
+            }
+
+
+            input {
+
+                padding: 13px;
+            }
+
+
+            button {
+
+                padding: 13px;
+            }
+        }
+
+
+        /* =========================================
+           SMALL MOBILE
+           ========================================= */
+
+        @media (max-width: 380px) {
+
+            .login-box {
+
+                padding: 28px 20px;
+            }
+
+
+            h2 {
+
+                font-size: 21px;
             }
         }
 
@@ -432,29 +486,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 </head>
 
 
-body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    min-height: 100vh;
+<body>
 
-    background-image:
-        linear-gradient(
-            rgba(55, 38, 25, 0.18),
-            rgba(55, 38, 25, 0.18)
-        ),
-        url('images/guru-woodworks-login-bg.png');
+    <div class="login-box">
 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+        <h2>🔐 Customer Login</h2>
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
-    padding: 20px;
-}
+        <?php if (!empty($error)): ?>
+
+            <div class="error">
+
+                <?php
+                echo htmlspecialchars(
+                    $error,
+                    ENT_QUOTES,
+                    'UTF-8'
+                );
+                ?>
+
+            </div>
+
+        <?php endif; ?>
+
+
+        <!-- =====================================
+             LOGIN FORM
+             ===================================== -->
+
+        <form
+            method="POST"
+            action="login.php"
+        >
+
+            <?php echo csrf_field(); ?>
+
 
             <!-- Email OR Mobile -->
 
@@ -495,6 +561,10 @@ body {
 
         </form>
 
+
+        <!-- =====================================
+             LINKS
+             ===================================== -->
 
         <div class="links">
 
