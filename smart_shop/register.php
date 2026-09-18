@@ -216,9 +216,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
                     rgba(55, 38, 25, 0.18)
                 ),
 
-                url('guru-woodworks-login-bg.png');
+                url('ChatGPT%20Image%20Sep%2018%2C%202026%2C%2003_50_08%20PM.png');
 
-            background-size: cover;
+            /* Show complete image */
+            background-size: 100% 100%;
 
             background-position: center;
 
@@ -532,6 +533,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
                 background-attachment: scroll;
 
                 background-position: center center;
+
+                /* Keep complete background image */
+                background-size: 100% 100%;
             }
 
 
@@ -576,15 +580,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
 
         @media (max-width: 380px) {
 
+            body {
+
+                padding: 10px;
+
+                background-position: center center;
+
+                background-size: 100% 100%;
+            }
+
+
             .register-box {
 
                 padding: 28px 20px;
+
+                border-radius: 18px;
             }
 
 
             h2 {
 
                 font-size: 21px;
+
+                margin-bottom: 18px;
+            }
+
+
+            input {
+
+                height: 47px;
+
+                margin: 10px 0;
+            }
+
+
+            button {
+
+                height: 48px;
+
+                margin-top: 10px;
+            }
+
+
+            .links {
+
+                margin-top: 18px;
             }
         }
 
