@@ -42,16 +42,244 @@ if ($isLoggedIn) {
     <title>Guru Woodworks - Premium Handcrafted Furniture</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+
     <style>
+        /* =========================================================
+           GURU WOODWORKS — NATURAL TEAK + ROSEWOOD HOME THEME
+           Interface only. PHP/database/cart functionality preserved.
+           ========================================================= */
+
+        :root {
+            --rosewood-dark: #3E1F16;
+            --rosewood: #6B351F;
+            --rosewood-light: #8F552F;
+            --teak-dark: #8A5A32;
+            --teak: #B9824A;
+            --teak-light: #D6A56D;
+            --teak-pale: #E8C99F;
+            --cream: #FFF8EE;
+            --cream-dark: #F4E7D3;
+            --text: #3A2117;
+            --muted: #80614A;
+            --white: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0 !important;
+            font-family: 'Poppins', sans-serif !important;
+            color: var(--text) !important;
+            background:
+                linear-gradient(
+                    180deg,
+                    #F4E7D3 0%,
+                    #E8C99F 42%,
+                    #F4E7D3 100%
+                ) !important;
+        }
+
+        /* =========================
+           NAVBAR
+           ========================= */
+        header {
+            background:
+                linear-gradient(
+                    135deg,
+                    #3E1F16 0%,
+                    #6B351F 48%,
+                    #8F552F 100%
+                ) !important;
+            border-bottom: 2px solid rgba(214, 165, 109, 0.75) !important;
+            box-shadow: 0 8px 25px rgba(62, 31, 22, 0.28) !important;
+        }
+
+        header h2 {
+            color: #FFF8EE !important;
+            letter-spacing: 0.2px;
+        }
+
+        header nav a {
+            color: #FFF8EE !important;
+            transition: all 0.25s ease !important;
+        }
+
+        header nav a:hover {
+            color: #E8C99F !important;
+        }
+
         .badge {
-            background: #ff416c;
-            color: #fff;
+            background: #D6A56D !important;
+            color: #3E1F16 !important;
             padding: 3px 8px;
             border-radius: 12px;
             font-size: 12px;
             margin-left: 5px;
             vertical-align: middle;
+            font-weight: 700;
         }
+
+        .nav-btn {
+            border-radius: 25px !important;
+            transition: all 0.25s ease !important;
+        }
+
+        .nav-btn-login {
+            background: transparent !important;
+            border: 1px solid #D6A56D !important;
+            color: #FFF8EE !important;
+        }
+
+        .nav-btn-login:hover {
+            background: #D6A56D !important;
+            color: #3E1F16 !important;
+        }
+
+        .nav-btn-register {
+            background: linear-gradient(135deg, #D6A56D, #B9824A) !important;
+            color: #3E1F16 !important;
+            border: 1px solid #E8C99F !important;
+            box-shadow: 0 5px 16px rgba(62, 31, 22, 0.28) !important;
+        }
+
+        .nav-btn-register:hover {
+            background: linear-gradient(135deg, #E8C99F, #D6A56D) !important;
+            color: #3E1F16 !important;
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           HERO
+           ========================= */
+        .hero {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(62, 31, 22, 0.96) 0%,
+                    rgba(107, 53, 31, 0.92) 52%,
+                    rgba(143, 85, 47, 0.90) 100%
+                ) !important;
+            color: #FFF8EE !important;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before,
+        .hero::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero::before {
+            width: 430px;
+            height: 430px;
+            top: -240px;
+            left: -150px;
+            background: rgba(214, 165, 109, 0.14);
+        }
+
+        .hero::after {
+            width: 500px;
+            height: 500px;
+            right: -230px;
+            bottom: -330px;
+            background: rgba(244, 231, 211, 0.10);
+        }
+
+        .hero h1,
+        .hero p,
+        .hero button {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            color: #FFF8EE !important;
+        }
+
+        .hero p {
+            color: #F4E7D3 !important;
+        }
+
+        .hero button {
+            background: linear-gradient(135deg, #D6A56D, #B9824A) !important;
+            color: #3E1F16 !important;
+            border: 1px solid #E8C99F !important;
+            box-shadow: 0 8px 22px rgba(62, 31, 22, 0.32) !important;
+            font-weight: 700 !important;
+        }
+
+        .hero button:hover {
+            background: linear-gradient(135deg, #E8C99F, #D6A56D) !important;
+            color: #3E1F16 !important;
+            transform: translateY(-2px) !important;
+        }
+
+        /* =========================
+           SECTION TITLE
+           ========================= */
+        .title {
+            color: #5A2E1E !important;
+            text-shadow: none !important;
+        }
+
+        /* =========================
+           PRODUCT AREA
+           ========================= */
+        .products {
+            background: transparent !important;
+        }
+
+        .card {
+            background:
+                linear-gradient(
+                    145deg,
+                    #FFF8EE 0%,
+                    #F4E7D3 58%,
+                    #E8C99F 100%
+                ) !important;
+            border: 1px solid #C99A68 !important;
+            border-radius: 20px !important;
+            box-shadow:
+                0 12px 30px rgba(62, 31, 22, 0.20),
+                inset 0 1px 0 rgba(255,255,255,0.65) !important;
+            color: #3A2117 !important;
+            transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+        }
+
+        .card:hover {
+            transform: translateY(-6px) !important;
+            box-shadow:
+                0 18px 38px rgba(62, 31, 22, 0.27),
+                inset 0 1px 0 rgba(255,255,255,0.75) !important;
+        }
+
+        .card h3 {
+            color: #5A2E1E !important;
+        }
+
+        .card > p {
+            color: #6B351F !important;
+            font-weight: 700 !important;
+        }
+
+        /* Wood material badges */
+        .wood-badge,
+        .card .badge[style] {
+            background: #E8C99F !important;
+            color: #5A2E1E !important;
+            border: 1px solid #B9824A !important;
+        }
+
+        /* Stock */
         .stock-badge {
             display: inline-block;
             padding: 4px 10px;
@@ -60,8 +288,22 @@ if ($isLoggedIn) {
             font-weight: 600;
             margin: 6px 0;
         }
-        .stock-in { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.4); }
-        .stock-out { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(248, 113, 113, 0.4); }
+
+        .stock-in {
+            background: #E4D4B9 !important;
+            color: #5A2E1E !important;
+            border: 1px solid #B9824A !important;
+        }
+
+        .stock-out {
+            background: #F1D8CC !important;
+            color: #7A2F22 !important;
+            border: 1px solid #C78A73 !important;
+        }
+
+        /* =========================
+           RATINGS
+           ========================= */
         .rating-box {
             display: flex;
             align-items: center;
@@ -69,27 +311,157 @@ if ($isLoggedIn) {
             gap: 6px;
             margin: 8px 0;
         }
-        .star-score { color: #f59e0b; font-weight: 600; font-size: 14px; }
+
+        .star-score {
+            color: #9A6137 !important;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
         .star-picker {
             display: inline-flex;
             direction: rtl;
             gap: 2px;
         }
+
         .star-picker span {
             cursor: pointer;
-            color: rgba(255, 255, 255, 0.3);
+            color: rgba(107, 53, 31, 0.30) !important;
             font-size: 18px;
             transition: color 0.2s;
         }
+
         .star-picker span:hover,
         .star-picker span:hover ~ span {
-            color: #fbbf24;
+            color: #B9824A !important;
         }
+
+        /* =========================
+           SIZES
+           ========================= */
+        .size-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin: 10px 0;
+        }
+
+        .size-label {
+            background: #E1D2BD !important;
+            color: #5A2E1E !important;
+            border: 1px solid #C2A47D !important;
+            border-radius: 12px !important;
+            font-weight: 600;
+        }
+
+        /* =========================
+           PRODUCT BUTTON
+           ========================= */
+        .card button {
+            background: linear-gradient(135deg, #6B351F, #B9824A) !important;
+            color: #FFF8EE !important;
+            border: 1px solid #8F552F !important;
+            box-shadow: 0 7px 17px rgba(62, 31, 22, 0.22) !important;
+        }
+
+        .card button:hover {
+            background: linear-gradient(135deg, #3E1F16, #8F552F) !important;
+            color: #FFF8EE !important;
+            transform: translateY(-2px) !important;
+        }
+
         .card button:disabled {
-            background: #4b5563;
+            background: #8C7A68 !important;
+            color: #F4E7D3 !important;
+            border-color: #80614A !important;
             cursor: not-allowed;
             transform: none !important;
             box-shadow: none !important;
+        }
+
+        /* =========================
+           CART CALLOUT
+           ========================= */
+        .cart {
+            background:
+                linear-gradient(
+                    135deg,
+                    #3E1F16,
+                    #6B351F 55%,
+                    #8F552F
+                ) !important;
+            color: #FFF8EE !important;
+            border-top: 2px solid #D6A56D !important;
+            border-bottom: 2px solid #D6A56D !important;
+        }
+
+        .cart h2 {
+            color: #FFF8EE !important;
+        }
+
+        .cart p {
+            color: #F4E7D3 !important;
+        }
+
+        .checkout-btn {
+            background: linear-gradient(135deg, #D6A56D, #B9824A) !important;
+            color: #3E1F16 !important;
+            border: 1px solid #E8C99F !important;
+            box-shadow: 0 7px 18px rgba(62, 31, 22, 0.28) !important;
+        }
+
+        .checkout-btn:hover {
+            background: #E8C99F !important;
+            color: #3E1F16 !important;
+        }
+
+        /* =========================
+           IMAGE MODAL
+           ========================= */
+        .image-modal {
+            background: rgba(42, 23, 16, 0.94) !important;
+        }
+
+        .close-btn {
+            color: #FFF8EE !important;
+        }
+
+        /* =========================
+           FOOTER
+           ========================= */
+        footer {
+            background: #2A1710 !important;
+            color: #E8C99F !important;
+            border-top: 1px solid #6B351F !important;
+        }
+
+        /* Keep error/no-product text readable */
+        .products > p {
+            color: #5A2E1E !important;
+        }
+
+        /* =========================
+           MOBILE
+           ========================= */
+        @media (max-width: 768px) {
+            header {
+                background: linear-gradient(180deg, #3E1F16, #6B351F) !important;
+            }
+
+            .hero {
+                background:
+                    linear-gradient(
+                        145deg,
+                        #3E1F16,
+                        #6B351F 60%,
+                        #8F552F
+                    ) !important;
+            }
+
+            .card {
+                border-radius: 18px !important;
+            }
         }
     </style>
 </head>
@@ -128,9 +500,9 @@ if ($isLoggedIn) {
         <?php if ($result && $result->num_rows > 0): ?>
             <?php while ($row = $result->fetch_assoc()): ?>
                 <div class="card">
-                    <img src="<?php echo htmlspecialchars($row['image'], ENT_QUOTES, 'UTF-8'); ?>" 
-                         alt="<?php echo htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8'); ?>" 
-                         class="product-image" 
+                    <img src="<?php echo htmlspecialchars($row['image'], ENT_QUOTES, 'UTF-8'); ?>"
+                         alt="<?php echo htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8'); ?>"
+                         class="product-image"
                          onclick="openImage(this.src)">
 
                     <h3><?php echo htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8'); ?></h3>
@@ -139,15 +511,15 @@ if ($isLoggedIn) {
                     <!-- Wood Material Badge -->
                     <?php if ($row['wood_type'] === 'both'): ?>
                         <div style="margin: 4px 0;">
-                            <span class="badge" style="background:rgba(56,189,248,0.2); color:#38bdf8; border:1px solid rgba(56,189,248,0.4); font-size:12px; padding:4px 10px;">🪵 Teakwood & Rosewood</span>
+                            <span class="badge" style="font-size:12px; padding:4px 10px;">🪵 Teakwood & Rosewood</span>
                         </div>
                     <?php elseif ($row['wood_type'] === 'teakwood'): ?>
                         <div style="margin: 4px 0;">
-                            <span class="badge" style="background:rgba(180,83,9,0.25); color:#fde68a; border:1px solid rgba(245,158,11,0.4); font-size:12px; padding:4px 10px;">🪵 Teakwood</span>
+                            <span class="badge" style="font-size:12px; padding:4px 10px;">🪵 Teakwood</span>
                         </div>
                     <?php elseif ($row['wood_type'] === 'rosewood'): ?>
                         <div style="margin: 4px 0;">
-                            <span class="badge" style="background:rgba(157,23,77,0.25); color:#fbcfe8; border:1px solid rgba(244,63,94,0.4); font-size:12px; padding:4px 10px;">🪵 Rosewood</span>
+                            <span class="badge" style="font-size:12px; padding:4px 10px;">🪵 Rosewood</span>
                         </div>
                     <?php endif; ?>
 
@@ -172,7 +544,7 @@ if ($isLoggedIn) {
                         </div>
                     </div>
 
-                    <!-- Size options - only displayed if admin enabled sizes for this product -->
+                    <!-- Size options -->
                     <?php if ((int)$row['has_sizes'] === 1): ?>
                         <div class="size-info">
                             <span class="size-label">5 × 6 : ₹<?php echo number_format((float)$row['price'], 2); ?></span>
