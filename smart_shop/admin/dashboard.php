@@ -1,9 +1,11 @@
 ```php
 <?php
-require_once __DIR__ . "/../includes/session.php";
-require_once __DIR__ . "/../includes/auth.php";
-require_once __DIR__ . "/../includes/csrf.php";
-require_once __DIR__ . "/../db.php";
+// admin/dashboard.php
+
+require_once __DIR__ . '/../includes/session.php';
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/csrf.php';
+require_once __DIR__ . '/../db.php';
 
 require_admin_login();
 
@@ -17,9 +19,7 @@ $products = [];
 $dbError = '';
 
 try {
-    $result = $conn->query(
-        "SELECT COUNT(*) AS c FROM products"
-    );
+    $result = $conn->query("SELECT COUNT(*) AS c FROM products");
     $prodCount = (int) ($result->fetch_assoc()['c'] ?? 0);
 
     $result = $conn->query(
@@ -32,90 +32,77 @@ try {
     );
     $pendingOrders = (int) ($result->fetch_assoc()['c'] ?? 0);
 
-    $result = $conn->query(
-        "SELECT COUNT(*) AS c FROM orders"
-    );
+    $result = $conn->query("SELECT COUNT(*) AS c FROM orders");
     $totalOrders = (int) ($result->fetch_assoc()['c'] ?? 0);
 
-    // Requires products.is_trending to exist in the database.
+    // Count products marked as trending.
     $result = $conn->query(
         "SELECT COUNT(*) AS c FROM products WHERE is_trending = 1"
     );
     $trendingCount = (int) ($result->fetch_assoc()['c'] ?? 0);
 
-    // Fetch products
-    $result = $conn->query(
-        "SELECT * FROM products ORDER BY id DESC"
-    );
+    // Fetch product catalog.
+    $result = $conn->query("SELECT * FROM products ORDER BY id DESC");
     $products = $result->fetch_all(MYSQLI_ASSOC);
 
 } catch (mysqli_sql_exception $e) {
-    // Log the actual database error on the server.
-    error_log("Admin dashboard database error: " . $e->getMessage());
-    $dbError = "Unable to load all dashboard information. Please check the database configuration.";
+    error_log('Admin dashboard database error: ' . $e->getMessage());
+    $dbError = 'Unable to load dashboard information. Please check the database configuration.';
+}
+
+function dashboard_escape($value): string
+{
+    return htmlspecialchars(
+        (string) ($value ?? ''),
+        ENT_QUOTES | ENT_SUBSTITUTE,
+        'UTF-8'
+    );
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Store Admin Dashboard - Guru Woodworks</title>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet"
-    >
-
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
     <link rel="stylesheet" href="../css/admin.css">
 
     <style>
         .trending-stat {
-            border: 1px solid rgba(184, 137, 84, 0.5);
-            background: linear-gradient(
-                135deg,
-                rgba(184, 137, 84, 0.16),
-                rgba(120, 75, 40, 0.08)
-            );
+            border: 1px solid rgba(184, 137, 84, .5);
+            background: linear-gradient(135deg, rgba(184, 137, 84, .16), rgba(120, 75, 40, .08));
         }
 
         .trending-stat .stat-value {
             color: #d6ad78;
         }
 
-        .trending-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 5px 10px;
-            border-radius: 20px;
-            background: rgba(184, 137, 84, 0.15);
-            border: 1px solid rgba(184, 137, 84, 0.4);
-            color: #e7c397;
-            font-size: 12px;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
+        .trending-badge,
         .regular-badge {
             display: inline-block;
             padding: 5px 10px;
             border-radius: 20px;
-            background: rgba(148, 163, 184, 0.1);
-            color: #94a3b8;
             font-size: 12px;
             white-space: nowrap;
         }
 
-        .product-name {
-            color: #f1f5f9;
+        .trending-badge {
+            background: rgba(184, 137, 84, .15);
+            border: 1px solid rgba(184, 137, 84, .4);
+            color: #e7c397;
+            font-weight: 600;
         }
 
-        .product-id {
+        .regular-badge {
+            background: rgba(148, 163, 184, .1);
             color: #94a3b8;
-            font-size: 12px;
         }
+
+        .product-name { color: #f1f5f9; }
+        .product-id { color: #94a3b8; font-size: 12px; }
 
         .product-thumb {
             width: 54px;
@@ -133,13 +120,13 @@ try {
         }
 
         .dashboard-success {
-            background: rgba(16, 185, 129, 0.15);
+            background: rgba(16, 185, 129, .15);
             border: 1px solid #10b981;
             color: #34d399;
         }
 
         .dashboard-error {
-            background: rgba(239, 68, 68, 0.15);
+            background: rgba(239, 68, 68, .15);
             border: 1px solid #ef4444;
             color: #fca5a5;
         }
@@ -153,9 +140,7 @@ try {
             margin-bottom: 20px;
         }
 
-        .catalog-heading h3 {
-            margin: 0;
-        }
+        .catalog-heading h3 { margin: 0; }
 
         .catalog-help {
             color: #94a3b8;
@@ -186,10 +171,7 @@ try {
         }
 
         @media (max-width: 600px) {
-            .catalog-heading {
-                align-items: flex-start;
-            }
-
+            .catalog-heading { align-items: flex-start; }
             .catalog-heading .btn-primary-admin {
                 width: 100%;
                 justify-content: center;
@@ -197,7 +179,6 @@ try {
         }
     </style>
 </head>
-
 <body>
 
 <header class="admin-nav">
@@ -205,18 +186,9 @@ try {
 
     <div class="admin-links">
         <a href="dashboard.php" class="active">Products</a>
-
-        <a href="orders.php">
-            Orders (<?php echo $pendingOrders; ?>)
-        </a>
-
-        <a href="add_product.php" class="btn-primary-admin">
-            + Add Product
-        </a>
-
-        <a href="logout.php" style="color:#ef4444;">
-            Logout
-        </a>
+        <a href="orders.php">Orders (<?= $pendingOrders ?>)</a>
+        <a href="add_product.php" class="btn-primary-admin">+ Add Product</a>
+        <a href="logout.php" style="color:#ef4444;">Logout</a>
     </div>
 </header>
 
@@ -224,233 +196,155 @@ try {
 
     <?php if ($dbError !== ''): ?>
         <div class="dashboard-message dashboard-error">
-            <?php
-            echo htmlspecialchars(
-                $dbError,
-                ENT_QUOTES,
-                'UTF-8'
-            );
-            ?>
+            <?= dashboard_escape($dbError) ?>
         </div>
     <?php endif; ?>
 
     <?php if (isset($_GET['msg'])): ?>
         <div class="dashboard-message dashboard-success">
-            <?php
-            echo htmlspecialchars(
-                $_GET['msg'],
-                ENT_QUOTES,
-                'UTF-8'
-            );
-            ?>
+            <?= dashboard_escape($_GET['msg']) ?>
         </div>
     <?php endif; ?>
 
-    <!-- Dashboard statistics -->
     <div class="stat-grid">
-
         <div class="stat-card">
             <div class="stat-label">Total Products</div>
-            <div class="stat-value">
-                <?php echo $prodCount; ?>
-            </div>
+            <div class="stat-value"><?= $prodCount ?></div>
         </div>
 
         <div class="stat-card">
             <div class="stat-label">Low Stock Alert (&lt; 5)</div>
-
-            <div
-                class="stat-value"
-                style="color:<?php echo $lowStock > 0 ? '#f87171' : '#34d399'; ?>"
-            >
-                <?php echo $lowStock; ?>
+            <div class="stat-value"
+                 style="color:<?= $lowStock > 0 ? '#f87171' : '#34d399' ?>;">
+                <?= $lowStock ?>
             </div>
         </div>
 
         <div class="stat-card">
             <div class="stat-label">Pending Orders</div>
-
             <div class="stat-value" style="color:#fbbf24;">
-                <?php echo $pendingOrders; ?>
+                <?= $pendingOrders ?>
             </div>
         </div>
 
         <div class="stat-card">
             <div class="stat-label">Total Lifetime Orders</div>
-
-            <div class="stat-value">
-                <?php echo $totalOrders; ?>
-            </div>
+            <div class="stat-value"><?= $totalOrders ?></div>
         </div>
 
         <div class="stat-card trending-stat">
             <div class="stat-label">Trending Products</div>
-
-            <div class="stat-value">
-                <?php echo $trendingCount; ?>
-            </div>
+            <div class="stat-value"><?= $trendingCount ?></div>
         </div>
-
     </div>
 
-    <!-- Product catalog -->
     <div class="panel-card" style="margin-top:25px;">
-
         <div class="catalog-heading">
             <h3>Product Catalog Management</h3>
-
-            <a href="add_product.php" class="btn-primary-admin">
-                + New Product
-            </a>
+            <a href="add_product.php" class="btn-primary-admin">+ New Product</a>
         </div>
 
         <p class="catalog-help">
-            Products marked <strong>⭐ Trending</strong> are selected
-            for the Trending Products section on your customer homepage.
-            Use Edit to change this setting.
+            Products marked ⭐ Trending appear in the Trending Products section
+            on the customer homepage. Use Edit to change this setting.
         </p>
 
         <div style="overflow-x:auto;">
             <table class="admin-table">
-
                 <thead>
-                    <tr>
-                        <th style="width:70px;">Image</th>
-                        <th>Product Name</th>
-                        <th>Price (₹)</th>
-                        <th>Stock Level</th>
-                        <th>Homepage Display</th>
-                        <th style="text-align:right;">Actions</th>
-                    </tr>
+                <tr>
+                    <th style="width:70px;">Image</th>
+                    <th>Product Name</th>
+                    <th>Price (₹)</th>
+                    <th>Stock Level</th>
+                    <th>Homepage Display</th>
+                    <th style="text-align:right;">Actions</th>
+                </tr>
                 </thead>
 
                 <tbody>
-                    <?php if (!empty($products)): ?>
-
-                        <?php foreach ($products as $p): ?>
-
-                            <tr>
-                                <td>
-                                    <img
-                                        class="product-thumb"
-                                        src="<?php echo htmlspecialchars($p['image'] ?? '', ENT_QUOTES, 'UTF-8'); ?>"
-                                        alt="<?php echo htmlspecialchars($p['name'] ?? 'Product', ENT_QUOTES, 'UTF-8'); ?>"
-                                        loading="lazy"
-                                        onerror="this.style.visibility='hidden';"
-                                    >
-                                </td>
-
-                                <td>
-                                    <strong class="product-name">
-                                        <?php
-                                        echo htmlspecialchars(
-                                            $p['name'] ?? '',
-                                            ENT_QUOTES,
-                                            'UTF-8'
-                                        );
-                                        ?>
-                                    </strong>
-
-                                    <div class="product-id">
-                                        ID: #<?php echo (int) $p['id']; ?>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    ₹ <?php
-                                    echo number_format(
-                                        (float) $p['price'],
-                                        2
-                                    );
-                                    ?>
-                                </td>
-
-                                <td>
-                                    <?php if ((int) $p['stock'] < 5): ?>
-
-                                        <span class="badge-status badge-disabled">
-                                            <?php echo (int) $p['stock']; ?>
-                                            left (Low)
-                                        </span>
-
-                                    <?php else: ?>
-
-                                        <span class="badge-status badge-active">
-                                            <?php echo (int) $p['stock']; ?>
-                                            in stock
-                                        </span>
-
-                                    <?php endif; ?>
-                                </td>
-
-                                <td>
-                                    <?php if (!empty($p['is_trending'])): ?>
-
-                                        <span class="trending-badge">
-                                            ⭐ Trending
-                                        </span>
-
-                                    <?php else: ?>
-
-                                        <span class="regular-badge">
-                                            Regular
-                                        </span>
-
-                                    <?php endif; ?>
-                                </td>
-
-                                <td class="action-links">
-                                    <a
-                                        href="edit_product.php?id=<?php echo (int) $p['id']; ?>"
-                                        class="edit-link"
-                                    >
-                                        Edit
-                                    </a>
-
-                                    <form
-                                        action="delete_product.php"
-                                        method="POST"
-                                        style="display:inline;"
-                                        onsubmit="return confirm('Delete this product?');"
-                                    >
-                                        <?php echo csrf_field(); ?>
-
-                                        <input
-                                            type="hidden"
-                                            name="id"
-                                            value="<?php echo (int) $p['id']; ?>"
-                                        >
-
-                                        <button
-                                            type="submit"
-                                            class="delete-button"
-                                        >
-                                            Delete
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-
-                        <?php endforeach; ?>
-
-                    <?php else: ?>
-
+                <?php if (!empty($products)): ?>
+                    <?php foreach ($products as $p): ?>
                         <tr>
-                            <td
-                                colspan="6"
-                                style="text-align:center; padding:30px; color:#94a3b8;"
-                            >
-                                No products found. Click "+ Add Product"
-                                to create your first item.
+                            <td>
+                                <img
+                                    class="product-thumb"
+                                    src="<?= dashboard_escape($p['image'] ?? '') ?>"
+                                    alt="<?= dashboard_escape($p['name'] ?? 'Product') ?>"
+                                    loading="lazy"
+                                    onerror="this.style.visibility='hidden';"
+                                >
+                            </td>
+
+                            <td>
+                                <strong class="product-name">
+                                    <?= dashboard_escape($p['name'] ?? '') ?>
+                                </strong>
+                                <div class="product-id">
+                                    ID: #<?= (int) $p['id'] ?>
+                                </div>
+                            </td>
+
+                            <td>₹ <?= number_format((float) $p['price'], 2) ?></td>
+
+                            <td>
+                                <?php if ((int) $p['stock'] < 5): ?>
+                                    <span class="badge-status badge-disabled">
+                                        <?= (int) $p['stock'] ?> left (Low)
+                                    </span>
+                                <?php else: ?>
+                                    <span class="badge-status badge-active">
+                                        <?= (int) $p['stock'] ?> in stock
+                                    </span>
+                                <?php endif; ?>
+                            </td>
+
+                            <td>
+                                <?php if (!empty($p['is_trending'])): ?>
+                                    <span class="trending-badge">⭐ Trending</span>
+                                <?php else: ?>
+                                    <span class="regular-badge">Regular</span>
+                                <?php endif; ?>
+                            </td>
+
+                            <td class="action-links">
+                                <a
+                                    href="edit_product.php?id=<?= (int) $p['id'] ?>"
+                                    class="edit-link"
+                                >Edit</a>
+
+                                <form
+                                    action="delete_product.php"
+                                    method="POST"
+                                    style="display:inline;"
+                                    onsubmit="return confirm('Delete this product?');"
+                                >
+                                    <?= csrf_field() ?>
+
+                                    <input
+                                        type="hidden"
+                                        name="id"
+                                        value="<?= (int) $p['id'] ?>"
+                                    >
+
+                                    <button type="submit" class="delete-button">
+                                        Delete
+                                    </button>
+                                </form>
                             </td>
                         </tr>
-
-                    <?php endif; ?>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="6"
+                            style="text-align:center;padding:30px;color:#94a3b8;">
+                            No products found. Click "+ Add Product" to create your first item.
+                        </td>
+                    </tr>
+                <?php endif; ?>
                 </tbody>
-
             </table>
         </div>
-
     </div>
 </div>
 
