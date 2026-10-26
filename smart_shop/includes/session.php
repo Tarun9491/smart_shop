@@ -1,4 +1,4 @@
-```php
+<CodeBlock language="php" editable>
 <?php
 // includes/session.php - Secure session management
 
@@ -11,7 +11,7 @@ if (session_status() === PHP_SESSION_NONE) {
         )
     );
 
-    session_set_cookie_params([
+session_set_cookie_params([
         'lifetime' => 604800,
         'path' => '/',
         'secure' => $isSecure,
@@ -19,6 +19,6 @@ if (session_status() === PHP_SESSION_NONE) {
         'samesite' => 'Lax'
     ]);
 
-    session_start();
+session_start();
 }
-```
+</CodeBlock>
