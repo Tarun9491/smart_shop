@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `stock` INT NOT NULL DEFAULT 15,
   `has_sizes` TINYINT(1) NOT NULL DEFAULT 0,
   `wood_type` VARCHAR(50) NOT NULL DEFAULT 'teakwood',
+  `is_trending` TINYINT(1) NOT NULL DEFAULT 0,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
