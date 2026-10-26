@@ -1,7 +1,6 @@
 ```php
 <?php
-// includes/session.php
-// Secure session management
+// includes/session.php - Secure session management
 
 if (session_status() === PHP_SESSION_NONE) {
     $isSecure = (
@@ -13,11 +12,11 @@ if (session_status() === PHP_SESSION_NONE) {
     );
 
     session_set_cookie_params([
-        'lifetime' => 7 * 24 * 60 * 60,
-        'path'     => '/',
-        'secure'   => $isSecure,
+        'lifetime' => 604800,
+        'path' => '/',
+        'secure' => $isSecure,
         'httponly' => true,
-        'samesite' => 'Lax',
+        'samesite' => 'Lax'
     ]);
 
     session_start();
