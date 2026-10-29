@@ -3,6 +3,7 @@
 // includes/session.php - Secure session management
 
 if (session_status() === PHP_SESSION_NONE) {
+
     $isSecure = (
         (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
         || (
