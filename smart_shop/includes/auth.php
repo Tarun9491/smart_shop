@@ -1,4 +1,4 @@
-```php
+
 <?php
 // includes/auth.php - Authentication and access control guards
 
@@ -10,9 +10,7 @@ require_once __DIR__ . '/session.php';
 function redirect_to_login(): void
 {
     if (headers_sent()) {
-        error_log(
-            'Authentication redirect failed: headers already sent.'
-        );
+        error_log('Authentication redirect failed: headers already sent.');
         exit('A page initialization error occurred. Please refresh the page.');
     }
 
@@ -49,4 +47,3 @@ function require_superadmin_login(): void
         redirect_to_login();
     }
 }
-```
