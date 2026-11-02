@@ -1,7 +1,5 @@
-
 <?php
 // includes/session.php - Secure session management
-
 if (session_status() === PHP_SESSION_NONE) {
 
     $isSecure = (
