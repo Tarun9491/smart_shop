@@ -4,21 +4,28 @@
 
 mysqli_report(MYSQLI_REPORT_OFF);
 
-// Read database credentials from environment variables
+// Aiven database configuration
 $host = getenv('DB_HOST') ?: 'mysql-1da1ba52-lakkojutarun966-2d57.d.aivencloud.com';
-$user = getenv('DB_USER') ?: '24897';
+$user = getenv('DB_USER') ?: 'avnadmin';
 $pass = getenv('DB_PASS') ?: 'Tarun@123';
 $name = getenv('DB_NAME') ?: 'defaultdb';
 $port = (int)(getenv('DB_PORT') ?: 24897);
 
-// Optional path to the Aiven CA certificate
-$caPath = getenv('DB_SSL_CA') ?: '';
+// Aiven CA certificate path
+$caPath = getenv('DB_SSL_CA') ?: '/var/www/html/certs/ca.pem';
 
-// Validate required configuration
+// Validate database credentials
 if ($host === '' || $user === '' || $pass === '') {
-    error_log('Database configuration missing. Check DB_HOST, DB_USER and DB_PASS.');
+    error_log('Database configuration missing.');
     http_response_code(503);
-    exit('Service temporarily unavailable. Please try again later.');
+    exit('Service temporarily unavailable.');
+}
+
+// Check CA certificate
+if (!is_readable($caPath)) {
+    error_log('Aiven CA certificate missing or unreadable: ' . $caPath);
+    http_response_code(503);
+    exit('Service temporarily unavailable.');
 }
 
 // Initialize MySQLi
@@ -27,27 +34,20 @@ $conn = mysqli_init();
 if (!$conn) {
     error_log('MySQLi initialization failed.');
     http_response_code(503);
-    exit('Service temporarily unavailable. Please try again later.');
+    exit('Service temporarily unavailable.');
 }
 
-// Set connection timeout
+// Connection timeout
 $conn->options(MYSQLI_OPT_CONNECT_TIMEOUT, 10);
 
-// Enable SSL before connecting.
-// If a CA certificate is supplied, use it for certificate validation.
-if (!$conn->ssl_set(
-    null,
-    null,
-    $caPath !== '' ? $caPath : null,
-    null,
-    null
-)) {
-    error_log('Failed to configure MySQL SSL.');
+// Configure SSL
+if (!$conn->ssl_set(null, null, $caPath, null, null)) {
+    error_log('Unable to configure MySQL SSL.');
     http_response_code(503);
-    exit('Service temporarily unavailable. Please try again later.');
+    exit('Service temporarily unavailable.');
 }
 
-// Connect using SSL
+// Connect to Aiven MySQL
 $connected = @$conn->real_connect(
     $host,
     $user,
@@ -65,8 +65,8 @@ if (!$connected) {
     );
 
     http_response_code(503);
-    exit('Service temporarily unavailable. Please try again later.');
+    exit('Service temporarily unavailable.');
 }
 
-// Set character encoding
+// Set UTF-8 encoding
 $conn->set_charset('utf8mb4');
