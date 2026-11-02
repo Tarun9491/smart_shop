@@ -1,13 +1,22 @@
+
 FROM php:8.2-apache
 
 WORKDIR /var/www/html
 
-COPY . /var/www/html/
-
+# Install PHP database extensions
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 
+# Enable Apache rewrite module
 RUN a2enmod rewrite
 
-EXPOSE 80
+# Copy application files
+COPY . /var/www/html/
 
-CMD ["apache2-foreground"]
+# Configure Render startup script
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+EXPOSE 10000
+
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
